@@ -1,0 +1,20 @@
+{
+  "installments": "الأقساط",
+  "payer_name": "اسم الدافع",
+  "phone_number": "موبايل الدافع",
+  "device_name": "اسم الجهاز",
+  "device_price": "سعر الجهاز",
+  "installment_amount": "قيمة القسط",
+  "start_date": "تاريخ البداية",
+  "down_payment": "المقدم",
+  "total_payment": "إجمالي المدفوعات",
+  "status_active": "الحالة",
+  "new_installment": "قسط جديد",
+  "edit_installment": "تعديل القسط",
+  "reset_total_payment": "الباقي من المدفوع",
+  "rest_months": "باقي الشهور",
+  "login": "تسجيل الدخول",
+  "register": "تسجيل",
+  "username": "اسم المستخدم",
+  "password": "كلمة المرور"
+}

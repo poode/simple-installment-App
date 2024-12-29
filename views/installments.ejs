@@ -1,0 +1,44 @@
+<h1><%= __('installments') %></h1>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th><%= __('payer_name') %></th>
+        <th><%= __('phone_number') %></th>
+        <th><%= __('device_name') %></th>
+        <th><%= __('device_price') %></th>
+        <th><%= __('installment_amount') %></th>
+        <th><%= __('start_date') %></th>
+        <th><%= __('down_payment') %></th>
+        <th><%= __('total_payment') %></th>
+        <th><%= __('reset_total_payment') %></th>
+        <th><%= __('rest_months') %></th>
+        <th><%= __('status_active') %></th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% installments.forEach(installment => { %>
+        <tr>
+            <td><%= installment.payer_name %></td>
+            <td><%= installment.phone_number %></td>
+            <td><%= installment.device_name %></td>
+            <td><%= installment.device_price %></td>
+            <td><%= installment.amount_to_be_paid_per_month %></td>
+            <td><%= installment.start_date.toLocaleDateString() %></td>
+            <td><%= installment.down_payment %></td>
+            <td><%= installment.total_payment %></td>
+            <td><%= installment.remaining_amount %></td>
+            <td><%= installment.months_paid %></td>
+            <td><%= installment.status %></td>
+            <td>
+                <form action="/installments/<%= installment.installment_id %>/pay" method="POST">
+                    <button type="submit" class="btn btn-success" <%= +installment.remaining_amount === 0 ? 'disabled' : '' %>>
+                        Pay
+                    </button>
+                </form>
+                <a href="/installments/<%= installment.installment_id %>/edit" class="btn btn-warning">Edit</a>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>

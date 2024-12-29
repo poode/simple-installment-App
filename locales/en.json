@@ -1,0 +1,20 @@
+{
+	"installments": "Installments",
+	"payer_name": "Payer Name",
+	"phone_number": "Payer Phone Number",
+	"device_name": "Device Name",
+	"device_price": "Device Price",
+	"installment_amount": "Installment Amount",
+	"start_date": "Start Date",
+	"down_payment": "Down Payment",
+	"total_payment": "Total Payment",
+	"status_active": "Status",
+	"new_installment": "New Installment",
+	"edit_installment": "Edit Installment",
+	"reset_total_payment": "Reset Total Payment",
+	"rest_months": "rest of months",
+	"login": "Login",
+	"register": "Register",
+	"username": "Username",
+	"password": "Password"
+}

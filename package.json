@@ -1,0 +1,54 @@
+{
+  "name": "installment-my-electron-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon app.js",
+    "start:app": "electron electron.js && wait-on http://localhost:3000",
+    "build:win": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.success.installmentapp",
+    "productName": "Installment App",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "app/**/*",
+      "node_modules/**/*",
+      "app.js",
+      "electron.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "public/img/img.png",
+      "signAndEditExecutable": true
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "installment app",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "i18n": "^0.15.1",
+    "mysql2": "^3.11.3",
+    "rcedit": "^4.0.1",
+    "sequelize": "^6.37.5",
+    "umzug": "^3.8.2"
+  },
+  "devDependencies": {
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
+    "nodemon": "^3.1.7",
+    "wait-on": "^8.0.1"
+  }
+}

@@ -1,0 +1,32 @@
+<h1><%= __('edit_installment') %></h1>
+<form method="POST" action="/installments/<%= installment.installment_id %>/edit">
+    <div class="form-group">
+        <label for="payer_name"><%= __('payer_name') %></label>
+        <input type="text" class="form-control" name="payer_name" id="payer_name" value="<%= installment.payer_name %>" required>
+    </div>
+    <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        <input type="text" class="form-control" name="phone_number" id="phone_number" value="<%= installment.phone_number %>" required>
+    </div>
+    <div class="form-group">
+        <label for="device_name"><%= __('device_name') %></label>
+        <input type="text" class="form-control" name="device_name" id="device_name" value="<%= installment.device_name %>" required>
+    </div>
+    <div class="form-group">
+        <label for="device_price"><%= __('device_price') %></label>
+        <input type="number" step="0.01" class="form-control" name="device_price" id="device_price" value="<%= installment.device_price %>" required>
+    </div>
+    <div class="form-group">
+        <label for="installment_percentage">Installment Percentage (%)</label>
+        <input type="number" step="0.01" class="form-control" name="installment_percentage" id="installment_percentage" value="<%= installment.installment_percentage %>" required>
+    </div>
+    <div class="form-group">
+        <label for="down_payment"><%= __('down_payment') %></label>
+        <input type="number" step="0.01" class="form-control" name="down_payment" id="down_payment" value="<%= installment.down_payment %>">
+    </div>
+    <div class="form-group">
+        <label for="installment_months">installment Months</label>
+        <input type="number" class="form-control" id="installment_months" name="installment_months" value="<%= installment.installment_months %>">
+    </div>
+    <button type="submit" class="btn btn-warning">Update Installment</button>
+</form>
