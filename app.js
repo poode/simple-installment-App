@@ -3,12 +3,11 @@ const express = require('express');
 const session = require('express-session');
 const i18n = require('i18n');
 const dotenv = require('dotenv');
-const expressLayouts = require('express-ejs-layouts'); // Require express-ejs-layouts
+const expressLayouts = require('express-ejs-layouts');
 
-const db = require('./config/database');
 const InstallmentRoutes = require('./routes/installments');
 const userRoutes = require('./routes/users');
-const isAuthenticated = require('./middleware/auth'); // Import the authentication middleware
+const isAuthenticated = require('./middleware/auth');
 
 const runMigrations = require('./config/migrate');
 dotenv.config();
@@ -17,7 +16,7 @@ const app = express();
 
 // Middleware setup
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'default_secret', // Provide a default secret for development
+    secret: process.env.SESSION_SECRET || 'default_secret',
     resave: false,
     saveUninitialized: true,
 }));
@@ -53,17 +52,14 @@ app.use(isAuthenticated);
 app.use('/installments', InstallmentRoutes);
 
 // Start the application
-const PORT = process.env.PORT || 3000;
 runMigrations().then(() => {
     console.log('Migrations complete.');
-
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, async () => {
         console.log(`Server running on http://localhost:${PORT}`);
-
-        // Sync database
-        await db.sequelize.sync(); // Consider using migrations for production
     });
 });
+
 
 module.exports = app
 

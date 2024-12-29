@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const {sequelize} = require('../config/database');
 
 class User extends Model {
@@ -13,7 +13,7 @@ class User extends Model {
 }
 
 User.init({
-    user_id: {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
