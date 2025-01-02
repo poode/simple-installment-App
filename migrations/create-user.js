@@ -1,9 +1,10 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
     up: async ({ context: queryInterface }) => {
         await queryInterface.createTable('users', {
-            user_id: {
+            id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
@@ -28,9 +29,20 @@ module.exports = {
                 defaultValue: DataTypes.NOW,
             },
         });
+
+        const hashedPassword = await bcrypt.hash('13070240', 10);
+        await queryInterface.bulkInsert('users', [
+            {
+                username: 'poode',
+                password: hashedPassword,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+        ]);
     },
 
     down: async ({ context: queryInterface }) => {
+        // Drop the 'users' table
         await queryInterface.dropTable('users');
-    }
+    },
 };

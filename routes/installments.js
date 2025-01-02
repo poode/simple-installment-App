@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models/Installment');
 
 router.get('/', async (req, res) => {
-    const installments = await db.findAll({ where: { user_id: req.session.userId } });
+    const installments = await db.findAll({ where: { userId: req.session.userId } });
     res.render('installments', { installments, title: 'installments' });
 });
 
@@ -33,7 +33,7 @@ router.post('/new', async (req, res) => {
     const amount_to_be_paid_per_month = total_payment / installmentMonths;
 
     await db.create({
-        user_id: req.session.userId,
+        userId: req.session.userId,
         phone_number: phoneNumber,
         payer_name: payerName,
         device_name: deviceName,
@@ -63,20 +63,20 @@ router.post('/:id/edit', async (req, res) => {
     if (installment) {
         const { device_name, device_price, installment_percentage, down_payment, installment_months } = req.body;
         if (!+installment.remaining_amount) {
-            const total_payment = (device_price * (1 + installment_percentage / 100)) - (down_payment + (installment.total_payment - installment.remaining_amount));
-            const remaining_amount = total_payment;
-            const amount_to_be_paid_per_month = total_payment / installment_months;
+            const total_payment = (+device_price * (1 + +installment_percentage / 100)) - (+down_payment + (+installment.total_payment - +installment.remaining_amount));
+            const remaining_amount = +total_payment;
+            const amount_to_be_paid_per_month = +total_payment / +installment_months;
 
             await installment.update({
                 device_name,
-                device_price,
-                installment_percentage,
-                down_payment,
-                total_payment,
-                remaining_amount,
-                installment_months,
+                device_price: +device_price,
+                installment_percentage: +installment_percentage,
+                down_payment: +down_payment,
+                total_payment: +total_payment,
+                remaining_amount: +remaining_amount,
+                installment_months: +installment_months,
                 months_paid: 0,
-                amount_to_be_paid_per_month,
+                amount_to_be_paid_per_month: +amount_to_be_paid_per_month,
             });
         }
 

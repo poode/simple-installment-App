@@ -1,7 +1,9 @@
 const { app, BrowserWindow } = require('electron');
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
+const path = require('path');
 
-const runMigrations = require('./config/migrate');  // Import the migration function
+require('dotenv').config({
+    path: path.join(__dirname, `.env.${process.env.NODE_ENV || 'development'}`)
+});
 
 async function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -9,44 +11,35 @@ async function createWindow() {
         height: 1000,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: true,
+            enableRemoteModule: true
         }
     });
 
-    mainWindow.loadURL('http://localhost:3000');  // Load the Express app
+    await mainWindow.loadURL('http://localhost:3000');
 
     mainWindow.on('closed', () => {
         app.quit();
+        process.exit(0);
     });
 }
 
 async function initApp() {
     try {
-        // Run migrations first
-        await runMigrations();
-        console.log('Migrations complete.');
-
-        // Start the Express server
-        require('./app')
-
-        // Create the Electron window after migrations are done
-        setTimeout(() => {
-            createWindow();
-        }, 1000)
-
+        require('./app');
+        await createWindow();
     } catch (error) {
         console.error('Failed to start application:', error);
-        app.quit();  // Exit if migrations or server startup fails
+        app.quit();
+        process.exit(0);
     }
 }
 
-// Ensure the server starts before loading the Electron window
-app.on('ready', initApp);
+app.whenReady().then(initApp);
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    app.quit();
+    process.exit(0);
 });
 
 app.on('activate', () => {
@@ -54,3 +47,5 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+app.on('will-quit', () => process.exit(0))

@@ -1,16 +1,18 @@
 {
   "name": "installment-my-electron-app",
-  "version": "1.0.0",
+  "version": "0.0.1b",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "start:dev": "nodemon app.js",
-    "start:app": "electron electron.js && wait-on http://localhost:3000",
-    "build:win": "electron-builder --win --x64"
+    "start:dev": "cross-env NODE_ENV=development nodemon app.js",
+    "start": "concurrently \"npm run start-server\" \"npm run start-electron\"",
+    "start-server": "node app.js",
+    "start-electron": "wait-on tcp:3000 && npx electron .",
+    "build:win": "electron-builder --win --x64",
+    "build:linux": "electron-builder --linux"
   },
   "build": {
     "appId": "com.success.installmentapp",
-    "productName": "Installment App",
+    "productName": "Installment Application",
     "directories": {
       "output": "dist"
     },
@@ -19,12 +21,20 @@
       "node_modules/**/*",
       "app.js",
       "electron.js",
-      "package.json"
+      "package.json",
+      "!node_modules/.cache/**"
+    ],
+    "extraResources": [
+      "./app.js"
     ],
     "win": {
       "target": "nsis",
       "icon": "public/img/img.png",
-      "signAndEditExecutable": true
+      "signAndEditExecutable": false
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "public/img/img.png"
     }
   },
   "keywords": [],
@@ -32,20 +42,22 @@
   "license": "ISC",
   "description": "installment app",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.3",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.1",
     "i18n": "^0.15.1",
-    "mysql2": "^3.11.3",
     "rcedit": "^4.0.1",
     "sequelize": "^6.37.5",
+    "sqlite3": "^5.1.7",
     "umzug": "^3.8.2"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "electron": "^33.0.2",
     "electron-builder": "^25.1.8",
     "nodemon": "^3.1.7",

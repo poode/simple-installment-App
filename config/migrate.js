@@ -1,6 +1,5 @@
-const { Sequelize } = require('sequelize');
 const { Umzug, SequelizeStorage } = require('umzug');
-const db = require('./database');  // Your Sequelize instance
+const db = require('./database'); // Your Sequelize instance
 
 const umzugLogger = {
     info: console.info.bind(console),
@@ -27,7 +26,7 @@ async function runMigrations() {
         console.log('All migrations applied successfully.');
     } catch (error) {
         console.error('Error running migrations:', error);
-        throw error;  // Fail if migrations can't be applied
+        throw error; // Fail if migrations can't be applied
     }
 }
 
